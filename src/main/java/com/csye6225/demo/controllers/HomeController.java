@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.RequestBody;
 import java.util.Date;
 
 @Controller
@@ -45,9 +45,19 @@ public class HomeController {
   @RequestMapping(value = "/testPost", method = RequestMethod.POST, produces = "application/json")
   @ResponseBody
   public String testPost() {
+
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("message", "authorized for /testPost");
     return jsonObject.toString();
   }
 
+  @RequestMapping(value = "user/register", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+  @ResponseBody
+  public String register(@RequestBody UserObject userObject) {
+    String userName = userObject.getUserName();
+    String password = userObject.getPassword();
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("message", "Saved");
+    return jsonObject.toString();
+  }
 }
